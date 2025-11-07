@@ -235,9 +235,9 @@ function App() {
     return (
       <div className="summary-grid">
         {cards.map((card) => (
-          <div key={card.label} className="summary-card">
+          <div key={card.label} className="summary-card glass-panel">
             <p className="label">{card.label}</p>
-            <p className="value">{card.value ?? '—'}</p>
+            <p className="value">{card.value ?? 'N/A'}</p>
           </div>
         ))}
       </div>
@@ -245,18 +245,45 @@ function App() {
   }
 
   return (
-    <div className="app-shell">
-      <header>
-        <div>
-          <h1>Chemical Equipment Visualizer</h1>
-          <p>Unified dashboard for the Django analytics backend.</p>
-        </div>
-        <button className="ghost" onClick={fetchData} disabled={loading}>
-          {loading ? 'Connecting...' : 'Refresh'}
-        </button>
-      </header>
+    <div className="page-bg">
+      <div className="aurora aurora-one" />
+      <div className="aurora aurora-two" />
+      <div className="app-shell">
+        <header className="hero">
+          <div className="hero-text">
+            <span className="badge">Hybrid analytics</span>
+            <h1>Chemical Equipment Visualizer</h1>
+            <p>
+              Upload process data, capture insights, and sync the experience across web and
+              desktop without touching the backend twice.
+            </p>
+            <div className="hero-actions">
+              <button className="primary" onClick={fetchData} disabled={loading}>
+                {loading ? 'Connecting...' : 'Refresh data'}
+              </button>
+              <div className={`status-chip ${isConnected ? 'success' : 'pending'}`}>
+                <span className="dot" />
+                {isConnected ? 'Backend live' : 'Awaiting first connection'}
+              </div>
+            </div>
+          </div>
+          <div className="hero-panel glass-panel">
+            <p className="hero-panel-label">Quick facts</p>
+            <ul>
+              <li>
+                <strong>Backend:</strong> <code>{API_BASE_URL}</code>
+              </li>
+              <li>
+                <strong>Dataset cache:</strong> 5 most recent uploads
+              </li>
+              <li>
+                <strong>PDF export:</strong> One-click from history
+              </li>
+            </ul>
+          </div>
+        </header>
 
-      <section className="panel">
+      <section className="panel glass-panel">
         <div className="panel-header">
           <h3>Authenticate</h3>
           <span>
@@ -300,8 +327,7 @@ function App() {
           <p className="success-text">{statusMessage}</p>
         )}
       </section>
-
-      <section className="panel">
+      <section className="panel glass-panel">
         <div className="panel-header">
           <h3>CSV Upload</h3>
           <div className="actions">
@@ -328,7 +354,7 @@ function App() {
       {renderSummaryCards()}
       <div className="grid-two">
         {renderChart()}
-        <div className="panel">
+        <div className="panel glass-panel">
           <div className="panel-header">
             <h3>Upload History</h3>
             <span>Last 5 uploads</span>
@@ -340,7 +366,7 @@ function App() {
                 <div>
                   <p className="item-title">{item.file_name}</p>
                   <p className="item-meta">
-                    {new Date(item.uploaded_at).toLocaleString()} •{' '}
+                    {new Date(item.uploaded_at).toLocaleString()} |{' '}
                     {item.summary?.total_equipment || 0} rows
                   </p>
                 </div>
@@ -354,6 +380,7 @@ function App() {
       </div>
 
       {renderTable()}
+      </div>
     </div>
   )
 }
