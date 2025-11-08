@@ -3,3 +3,5 @@ djangorestframework==3.16.1
 django-cors-headers==4.9.0
 pandas==2.3.3
 reportlab==4.4.4
+gunicorn==21.2.0
+whitenoise==6.7.0
