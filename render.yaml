@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: chemical-equipment-api
+    env: python
+    rootDir: backend
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate
+      python manage.py create_demo_user
+    startCommand: gunicorn backend.wsgi:application
+    plan: free
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        value: GvHduz7cz08j0INNjqsx3tzdh31aTHzhKsVSnJIGBzXPFzhA8M4rh7iB9d6afxfV
+      - key: DJANGO_ALLOWED_HOSTS
+        value: chemical-equipment-api.onrender.com
